@@ -1,80 +1,285 @@
 # NUA — Mini E-Commerce App
 
-A production-style mini storefront built with **React 18+**, **Vite**, **TypeScript**, and **SCSS modules**. Product data comes from the [Fake Store API](https://fakestoreapi.com); cart state persists in `localStorage`.
+A production-style mini storefront built with **React 18+**, **Vite**, **TypeScript**, and **SCSS Modules**. Product data is fetched from the Fake Store API, while cart state and UI preferences are persisted using localStorage.
 
-## Live demo
+---
 
-> Deploy to Vercel or Netlify and add your live URL here before submission.
+## Live Demo
+
+**Live Site:**  
+https://mousumimalik.github.io/nua-assignment/
+
+**GitHub Repository:**  
+https://github.com/mousumimalik/nua-assignment
+
+---
 
 ## Setup
 
-Requirements: **Node.js 18+**
+### Requirements
+
+- Node.js 18+
+- npm
+
+### Installation
 
 ```bash
-git clone <your-repo-url>
-cd nua
+git clone https://github.com/mousumimalik/nua-assignment.git
+cd nua-assignment
 npm install
 npm run dev
 ```
 
-Open [http://localhost:5173](http://localhost:5173).
+Open:
 
-### Other scripts
+```text
+http://localhost:5173
+```
+
+### Available Scripts
 
 ```bash
-npm run build    # production build
-npm run preview  # preview production build locally
-npm run lint     # ESLint
+npm run dev       # Start development server
+npm run build     # Create production build
+npm run preview   # Preview production build locally
+npm run lint      # Run ESLint
+npm run deploy    # Deploy to GitHub Pages
 ```
+
+---
 
 ## Features
 
-- **Product listing** (`/`) — responsive grid with image, name, price, and Quick Add
-- **Product detail** (`/product/:id`) — gallery with thumbnails, brand, sale pricing, colour/size variants, quantity picker, deep-linkable variant URL (`?color=navy&size=M`)
-- **Navbar** — cart icon with live item-count badge
-- **Cart drawer** — slide-in panel with quantity controls, remove, and bill summary
-- **Persistence** — cart survives page refresh via `localStorage`
-- **Responsive** — two-column detail layout on desktop; single column + horizontal thumbnails on mobile (≤767px)
+### Product Listing Page (`/`)
 
-## Project structure
+- Responsive product grid
+- Product image, name, and price
+- Quick Add to Cart button
+- Navigation to product details
 
+### Product Detail Page (`/product/:id`)
+
+- Product image gallery with thumbnail selection
+- Brand information
+- Sale pricing support
+- Colour selection
+- Size selection
+- Available, Low Stock, and Sold Out states
+- Quantity picker
+- Disabled Add to Cart button for sold-out variants
+- Deep-linkable variant selection using URL query parameters
+
+Example:
+
+```text
+/product/1?color=navy&size=M
 ```
+
+### Navbar
+
+- Cart icon
+- Live cart count badge
+- Cart drawer trigger
+
+### Cart Drawer
+
+- Slide-in drawer from the right
+- Product thumbnail
+- Product name
+- Variant information
+- Quantity controls
+- Remove item functionality
+- Subtotal calculation
+- Grand total calculation
+
+### Persistence
+
+- Cart state stored in localStorage
+- Cart survives page refreshes
+- Variant selection survives refreshes through URL state
+
+### Responsive Design
+
+#### Desktop (>767px)
+
+- Multi-column product grid
+- Two-column product detail layout
+
+#### Mobile (≤767px)
+
+- Single-column layouts
+- Horizontally scrollable thumbnail gallery
+
+---
+
+## Tech Stack
+
+- React 18
+- TypeScript
+- React Router
+- Context API
+- SCSS Modules
+- Vite
+- Fake Store API
+- GitHub Pages
+
+---
+
+## Project Structure
+
+```text
 src/
-├── components/     # Reusable UI (Navbar, CartDrawer, ProductCard, etc.)
-├── data/           # Constants and variant enrichment logic
-├── hooks/          # useProducts, useProduct, useLocalStorage
-├── pages/          # Route-level views
-├── router/         # React Router setup
-├── stores/         # CartContext (global cart state)
-├── styles/         # Global SCSS, variables, mixins
-├── types/          # Shared TypeScript types
-└── utils/          # Helpers (formatPrice)
+├── components/      # Reusable UI components
+├── data/            # Product enrichment and constants
+├── hooks/           # Shared hooks
+├── pages/           # Route-level pages
+├── router/          # Routing configuration
+├── stores/          # Cart context and state management
+├── styles/          # Global SCSS, variables, mixins
+├── types/           # TypeScript types
+└── utils/           # Utility helpers
 ```
 
-## Design decisions
+---
 
-### State management — Context API
+## Design Decisions
 
-Cart state uses React Context rather than Redux or Zustand. For a focused assignment with one global concern (cart + drawer visibility), Context keeps the codebase small while still separating persistence, actions, and UI. See `DECISIONS.md` for the full rationale.
+### State Management
 
-### Variant data
+The application uses React Context API for global cart state.
 
-The Fake Store API does not expose colours, sizes, stock, brands, or sale prices. The app enriches API responses in `src/data/variants.ts` using deterministic rules keyed on product ID so variant behaviour is consistent across sessions.
+For this project, Context API provides a simple and lightweight solution without introducing additional dependencies. Cart state, persistence logic, and UI interactions are centralized within a dedicated provider.
 
-### URL state
+Additional details are documented in:
 
-Selected colour and size live in query params (`?color=&size=`) so product detail pages are shareable and survive refresh.
+```text
+DECISIONS.md
+```
 
-## Known trade-offs
+### Product Variants
 
-- Thumbnail images beyond the primary API image use seeded Picsum placeholders for visual variety.
-- Quick Add on the listing page uses the first available variant rather than prompting for size/colour.
-- Shipping and tax are not modelled; grand total equals subtotal.
+The Fake Store API does not provide:
+
+- Colours
+- Sizes
+- Inventory
+- Brands
+- Sale pricing
+
+To support the assignment requirements, product data is enriched locally using deterministic rules based on product IDs.
+
+This allows:
+
+- Consistent variant generation
+- Stock status handling
+- Sale price display
+- Stable behaviour across refreshes
+
+### URL-Based Variant Selection
+
+Selected variants are stored in URL query parameters:
+
+```text
+?color=navy&size=M
+```
+
+Benefits:
+
+- Deep-linkable product pages
+- Shareable URLs
+- Refresh-safe variant selection
+
+---
+
+## Known Trade-Offs
+
+- Product variants are generated locally because the API does not provide variant data.
+- Additional gallery images use seeded placeholder images.
+- Quick Add selects the first available variant automatically.
+- Shipping and taxes are not included in calculations.
+- Inventory is not decremented when items are added to the cart.
+
+---
+
+## Deployment
+
+This project is deployed using GitHub Pages.
+
+Production URL:
+
+https://mousumimalik.github.io/nua-assignment/
+
+To redeploy:
+
+```bash
+npm run deploy
+```
+
+---
 
 ## Lighthouse
 
-Run Lighthouse in Chrome DevTools against the production build (`npm run build && npm run preview`) and save a screenshot to `/docs/lighthouse.png` before submission.
+A Lighthouse audit was performed against the production build.
+
+Results:
+
+| Category       | Score |
+| -------------- | ----- |
+| Performance    | 70    |
+| Accessibility  | 96    |
+| Best Practices | 100   |
+| SEO            | 100   |
+
+Audit Report:
+
+```text
+docs/lighthouse.pdf
+```
+
+The audit was run against the production build using:
+
+```bash
+npm run build
+npm run preview
+```
+
+Environment:
+
+- Chrome Lighthouse 13.x
+- Mobile emulation
+- Slow 4G throttling
+
+---
 
 ## Author
 
-Add your name here before submitting.
+**Mousumi Malik**
+
+Frontend Developer
+
+GitHub:
+https://github.com/mousumimalik
+
+Project Repository:
+https://github.com/mousumimalik/nua-assignment
+
+Live Demo:
+https://mousumimalik.github.io/nua-assignment/
+
+---
+
+## Submission
+
+This project was completed as part of a Frontend Developer technical assignment.
+
+Deliverables included:
+
+- Product listing page
+- Product detail page with variant selection
+- Cart drawer with persistence
+- Responsive layouts
+- URL-based variant state
+- LocalStorage persistence
+- GitHub Pages deployment
+- Architectural decisions documented in `DECISIONS.md`
+- Lighthouse audit report
