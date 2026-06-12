@@ -23,7 +23,7 @@ function AppLayout() {
 
 export function AppRouter() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/nua-assignment">
       <CartProvider>
         <AppLayout />
       </CartProvider>
