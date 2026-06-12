@@ -1,0 +1,3 @@
+# Place Lighthouse report screenshot here before submission.
+# Run: npm run build && npm run preview
+# Then audit with Chrome DevTools → Lighthouse (Performance, Accessibility, Best Practices, SEO)
