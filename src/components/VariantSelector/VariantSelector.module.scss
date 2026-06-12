@@ -1,0 +1,128 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.fieldset {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.legend {
+  display: block;
+  margin-bottom: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.625rem;
+}
+
+.swatch {
+  @include button-reset;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08);
+  transition: transform $transition-fast, box-shadow $transition-fast;
+
+  &.light {
+    box-shadow: inset 0 0 0 1px $color-border;
+  }
+
+  &.selected {
+    box-shadow: 0 0 0 2px $color-surface, 0 0 0 4px $color-text;
+  }
+
+  &:hover {
+    transform: scale(1.08);
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+.selectedLabel {
+  margin: 0.625rem 0 0;
+  font-size: 0.8125rem;
+  color: $color-text-muted;
+}
+
+.sizes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.625rem;
+}
+
+.sizeButton {
+  @include button-reset;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 3.75rem;
+  min-height: 3.25rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  background: $color-surface;
+  transition: border-color $transition-fast, background $transition-fast;
+
+  &.selected {
+    border-color: $color-text;
+    background: $color-bg;
+  }
+
+  &.soldout {
+    opacity: 0.45;
+    text-decoration: line-through;
+    cursor: not-allowed;
+  }
+
+  &.low {
+    border-color: $color-warning;
+  }
+
+  &:hover:not(:disabled) {
+    border-color: $color-text-muted;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+.sizeLabel {
+  font-weight: 600;
+  font-size: 0.9375rem;
+}
+
+.sizeStatus {
+  margin-top: 0.125rem;
+  font-size: 0.625rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.low .sizeStatus {
+  color: $color-warning;
+}
+
+.soldout .sizeStatus {
+  color: $color-danger;
+}

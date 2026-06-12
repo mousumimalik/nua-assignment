@@ -1,0 +1,52 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.label {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.controls {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  overflow: hidden;
+
+  &.disabled {
+    opacity: 0.5;
+  }
+
+  button {
+    @include button-reset;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: $color-bg;
+    font-size: 1.125rem;
+
+    &:hover:not(:disabled) {
+      background: $color-border;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+  }
+}
+
+.value {
+  min-width: 2.75rem;
+  text-align: center;
+  font-weight: 600;
+}
